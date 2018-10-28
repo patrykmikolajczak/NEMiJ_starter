@@ -9,8 +9,10 @@ database.connect = () => {
     const errorLogger = new Logger( 'error', 'error.log' )
 
     mongoose.connect( CONFIG.db_uri, {
-        useNewUrlParser: true
+        useNewUrlParser: true,
+        useCreateIndex: true
     } )
+
     const db = mongoose.connection
     db.on( 'error', ( err ) => {
         errorLogger.log( 'Database connection error' )
@@ -19,10 +21,11 @@ database.connect = () => {
     db.once( 'open', () => {
         infoLogger.log( 'Database succesfully connected' )
     } )
+    return db
 }
 
 database.disconnect = () => {
     mongoose.connection.close()
 }
 
-export default database
+module.exports = database
