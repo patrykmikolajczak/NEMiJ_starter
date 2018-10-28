@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node ./lib/server.js",
     "build": "babel src -d lib",
-    "test": "mocha --reporter=nyan --recursive --require babel-register",
-    "lint": "eslint src/*.js tests/*.js",
+    "test": "mocha --recursive --require babel-register",
+    "lint": "eslint src/*.js test/*.js",
     "pretest": "npm run lint",
     "postinstall": "npm run build"
   },

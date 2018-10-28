@@ -83,7 +83,7 @@
             "allowImplicit": true
         } ],
         "no-await-in-loop": 2,
-        "dot-location": [ 2, "object" ],
+        "dot-location": [ 2, "property" ],
         "dot-notation": 2,
         "array-callback-return": 2,
         "no-proto": 2,
