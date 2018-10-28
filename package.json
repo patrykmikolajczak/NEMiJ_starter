@@ -1,0 +1,40 @@
+{
+  "name": "nmj_starter",
+  "version": "0.0.1",
+  "description": "Starter do projektów z Node.js (Express.js) MongoDB i JWT",
+  "scripts": {
+    "start": "node ./lib/server.js",
+    "build": "babel src -d lib",
+    "test": "mocha --reporter=nyan --recursive --require babel-register",
+    "lint": "eslint src/*.js tests/*.js",
+    "pretest": "npm run lint",
+    "postinstall": "npm run build"
+  },
+  "author": "Patryk \"Suliwoj\" Mikołajczak",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.3",
+    "cors": "^2.8.4",
+    "debug": "^4.1.0",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "http-errors": "^1.7.1",
+    "mongoose": "^5.3.6",
+    "mongoose-validator": "^2.1.0",
+    "morgan": "^1.9.1",
+    "validator": "^10.8.0",
+    "winston": "^3.1.0"
+  },
+  "devDependencies": {
+    "@comandeer/eslint-config": "^0.1.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "eslint": "^4.19.1",
+    "mocha": "^5.2.0",
+    "supertest": "^3.1.0"
+  }
+}
