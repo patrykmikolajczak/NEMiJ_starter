@@ -2,13 +2,19 @@ import express from 'express'
 import compression from 'compression'
 import morgan from 'morgan'
 import cors from 'cors'
+import helmet from 'helmet'
+
+import v1 from './routes/v1'
 
 const app = express()
+app.use( helmet() )
 app.use( cors() )
 app.use( compression() )
 app.use( morgan( 'dev' ) )
 app.use( express.json() )
 app.use( express.urlencoded( { extended: false } ) )
+
+app.use( '/v1', v1 )
 
 app.use( '/', ( req, res ) => {
     res.statusCode = 200 // send the appropriate status code

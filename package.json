@@ -4,6 +4,7 @@
   "description": "Starter do projektów z Node.js (Express.js) MongoDB i JWT",
   "scripts": {
     "start": "node ./lib/server.js",
+    "serve": "nodemon ./src/server.js --exec babel-node",
     "build": "babel src -d lib",
     "test": "mocha --recursive --require babel-register",
     "lint": "eslint src/*.js test/*.js",
@@ -16,6 +17,7 @@
   "author": "Patryk \"Suliwoj\" Mikołajczak",
   "license": "MIT",
   "dependencies": {
+    "@babel/polyfill": "7.0.0",
     "bcrypt": "^3.0.2",
     "body-parser": "^1.18.3",
     "compression": "^1.7.3",
@@ -24,12 +26,15 @@
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
+    "helmet": "3.14.0",
     "http-errors": "^1.7.1",
     "jsonwebtoken": "8.3.0",
     "mongo-seeding": "3.0.0",
     "mongoose": "^5.3.6",
     "mongoose-validator": "^2.1.0",
     "morgan": "^1.9.1",
+    "passport": "0.4.0",
+    "passport-jwt": "4.0.0",
     "path": "0.12.7",
     "validator": "^10.8.0",
     "winston": "^3.1.0"
@@ -37,13 +42,14 @@
   "devDependencies": {
     "@babel/cli": "7.1.2",
     "@babel/core": "7.1.2",
-    "@babel/polyfill": "7.0.0",
+    "@babel/node": "7.0.0",
     "@babel/preset-env": "7.1.0",
     "@babel/register": "7.0.0",
     "@comandeer/eslint-config": "^0.1.0",
     "chai": "^4.1.2",
     "eslint": "^4.19.1",
     "mocha": "^5.2.0",
+    "nodemon": "1.18.5",
     "supertest": "^3.1.0"
   }
 }
