@@ -3,6 +3,8 @@ import passport from 'passport'
 
 import UserController from '../controllers/UserController'
 
+import { catchAsync } from '../middleware/error'
+
 const router = express.Router()// eslint-disable-line new-cap
 
 import middleware from '../middleware/passport'
@@ -32,10 +34,10 @@ router.get( '/test', requireAuth, ( req, res ) => {
     } )
 } )
 
-// router.post(    '/users',           UserController.create )             // C
-// router.get(     '/users',           requireAuth, UserController.get )   // R
-// router.put(     '/users',           requireAuth, UserController.get )   // U
-// router.delete(  '/users',           requireAuth, UserController.get )   // D
-router.post(    '/users/login',     UserController.login )
+// router.post(    '/users',           catchAsync( UserController.create ) )             // C
+// router.get(     '/users',           requireAuth, catchAsync( UserController.get ) )   // R
+// router.put(     '/users',           requireAuth, catchAsync( UserController.get ) )   // U
+// router.delete(  '/users',           requireAuth, catchAsync( UserController.get ) )   // D
+router.post(    '/users/login',     catchAsync( UserController.login ) )
 
 export default router

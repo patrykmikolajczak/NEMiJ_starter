@@ -1,11 +1,11 @@
 const supertest = require( 'supertest' )
-const expect = require( 'chai' ).expect
+// const expect = require( 'chai' ).expect
 const mongoose = require( 'mongoose' )
 const router = require( '../src/app' ).default
 const CONFIG = require( '../src/config/config' )
 
-describe( 'loading express app', () => {
-    const server = router.listen( 3030 )
+describe( 'UserController & UserModel', () => {
+    const server = router.listen( 3031 )
     const request = supertest.agent( server )
 
     before( ( done ) => {
@@ -26,12 +26,9 @@ describe( 'loading express app', () => {
         } )
     } )
 
-    it( 'server exists', () => {
-        expect( server ).to.exist
-    } )
-
-    it( 'should give 200 response from GET /', () => {
-        return request.get( '/' )
+    it( 'should give 200 response from POST /v1/user/login', () => {
+        return request.post( '/v1/user/login' )
+            .send( { login: 'admin@admin.com', password: '12345' } )
             .expect( 200 )
     } )
 

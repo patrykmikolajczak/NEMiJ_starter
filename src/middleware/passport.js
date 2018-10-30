@@ -8,17 +8,17 @@ export default ( passport ) => {
     options.secretOrKey = CONFIG.jwt_encryption
 
     passport.use( new Strategy( options, async( jwt_payload, done ) => {
-        let err = null, user = null;
-        [ err, user ] = await UserModel.findById( jwt_payload.user_id )
+        try {
+            const user = await UserModel.findById( jwt_payload.user_id )
 
-        if ( err ) {
+            if ( user ) {
+                return done( null, user )
+            } else {
+                return done( null, false )
+            }
+
+        } catch ( err ) {
             return done( err, false )
-        }
-
-        if ( user ) {
-            return done( null, user )
-        } else {
-            return done( null, false )
         }
 
     } ) )

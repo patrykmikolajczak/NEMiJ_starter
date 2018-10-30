@@ -39,14 +39,13 @@ const controller = {
                 return res.json( { success: false, message: 'User does not exist.' } )
             }
 
-            // user = await user.comperPassword( body.password )
+            // user = await user.comparePassword( body.password )
 
             // if ( !user ) {
             //     return res.json( { success: false, message: 'Wrong password.' } )
             // }
 
             return res.json( { token: user.getJWT() } )
-            // return res.json( { success: true } )
 
         }
     }

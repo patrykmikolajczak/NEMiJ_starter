@@ -1,9 +1,9 @@
-require ( '@babel/polyfill' )
-const mongoose          = require( 'mongoose' )
-const validate          = require( 'mongoose-validator' )
-const CONFIG            = require( '../config/config' )
-const jwt               = require( 'jsonwebtoken' )
-const bcrypt            = require( 'bcrypt' )
+const mongoose = require( 'mongoose' )
+const validate = require( 'mongoose-validator' )
+const CONFIG = require( '../config/config' )
+const jwt = require( 'jsonwebtoken' )
+// const bcrypt = require( 'bcrypt' )
+const bcrypt = require( 'bcrypt-promise' )
 // const Logger            = require( '../utils/Logger' )
 
 // const errorLogger = new Logger( 'error', 'error.log' )
@@ -29,8 +29,7 @@ const UserSchema = new Schema( {
     },
     password: {
         type: String,
-        required: true,
-        select: false
+        required: true
     },
     role: {
         type: String,
@@ -45,42 +44,40 @@ const UserSchema = new Schema( {
 
 UserSchema.pre( 'save', async( next ) => {
 
-    if ( this.isModified( 'password' ) || this.isNew ){
+    try {
+        if ( this.isModified( 'password' ) || this.isNew ){
 
-        let err = null, salt = null, hash = null;
-        [ err, salt ] = await bcrypt.genSalt( 10 )
-        if ( err ) {
-            throw new Error( err.message )
+            let salt = null, hash = null
+            salt = await bcrypt.genSalt( 10 )
+
+            hash = await bcrypt.hash( this.password, salt )
+
+            this.password = hash
+
+        } else {
+            return next()
         }
-
-        [ err, hash ] = await bcrypt.hash( this.password, salt )
-        if ( err ) {
-            throw new Error( err.message )
-        }
-
-        this.password = hash
-
-    } else {
-        return next()
+    } catch ( err ) {
+        throw new Error( err.message )
     }
 } )
 
-UserSchema.methods.comparePassword = async( pw ) => {
-    let err = null, pass = null
-    if ( !this.password ) {
-        throw new Error( 'password not set' )
-    }
+UserSchema.methods.comparePassword = async function( pw ) {
+    try {
+        let pass = null
+        if ( !this.password ) {
+            throw new Error( 'password not set' )
+        }
 
-    [ err, pass ] = await bcrypt.compare( pw, this.password )
-    if ( err ) {
-        throw new Error( err )
-    }
+        pass = await bcrypt.compare( pw, this.password )
+        if ( !pass ) {
+            throw new Error( 'invalid password' )
+        }
 
-    if ( !pass ) {
-        throw new Error( 'invalid password' )
+        return this
+    } catch ( err ) {
+        throw new Error( err.message )
     }
-
-    return this
 }
 
 UserSchema.methods.getJWT = function(){
